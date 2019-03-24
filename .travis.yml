@@ -1,0 +1,23 @@
+notifications:
+  email:
+    recipients:
+    - baiduvip_crack@yeah.net
+    - taylortaurus0517@yeah.net
+    on_success: always
+    on_failure: always
+branches: master
+before_install: export TZ='Asia/Shanghai'
+script: mkdir Notification
+after_script:
+- cp README.md ./Notification/
+- cd ./Notification
+- git init
+- git config user.name 'autotestepoint'
+- git config user.email 'autotestepoint@gmail.com'
+- git checkout -b send-email
+- git add .
+- git commit -m 'Auto Send Email By TravisCI With Build $TRAVIS_BUILD_NUMBER'
+- git push --force --quiet 'https://${GH_TOKEN}@${GH_REF}' send-email:send-email
+env:
+  global:
+    GH_REF: github.com/AutoTestEpoint/Email2Ranorex
